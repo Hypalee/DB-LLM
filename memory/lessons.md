@@ -39,3 +39,28 @@ Mieux vaut finir une chose, commit, puis ouvrir une nouvelle session.
 Une entrée écrite 3 jours après le bug est déjà moins précise qu'une
 entrée écrite le jour même. Prendre l'habitude de noter **pendant** la
 session, pas après.
+
+---
+
+### Objectif d'apprentissage : devenir autonome sur l'écosystème IA
+Se spécialiser dans l'usage avancé de Claude Code et des LLMs : skills,
+workflows, hooks, multi-agent, API Anthropic. Je suis débutant mais
+motivé. Claude doit m'expliquer les concepts au fur et à mesure, avec
+le vocabulaire exact, sans survol.
+
+Direction à moyen terme :
+1. Maîtriser settings.json / hooks / agents / skills de Claude Code.
+2. Apprendre à écrire des prompts système pour agents spécialisés.
+3. Construire avec l'API Anthropic (prompt caching, tool use, batch).
+
+---
+
+### Préférence device : mobile (transports matin/soir)
+J'utilise Claude Code sur téléphone dans les transports. Sur mobile, le
+sélecteur de modèle n'est pas accessible quand je reprends une session.
+→ `model: "claude-opus-4-7"` posé globalement dans `~/.claude/settings.json`
+pour que les **nouvelles sessions** démarrent toujours sur Opus 4.7.
+
+Limite connue : le modèle des sessions déjà ouvertes n'est pas réécrit
+par cette config. Si une session reprend sur un autre modèle, ouvrir
+une nouvelle session est le plus simple.
