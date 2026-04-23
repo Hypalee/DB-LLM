@@ -100,6 +100,13 @@ Quand Claude Code travaille sur un de mes projets :
 8. **Quand un piège est découvert** (bug subtil, comportement non
    documenté), l'ajouter à `memory/gotchas.md` et au `projects/<nom>.md`
    concerné.
+9. **Quand tu m'expliques en détail un concept IA / Claude Code /
+   agents** (définitions, patterns, architectures, tradeoffs), ou
+   quand je te demande explicitement de prendre des notes, écrire un
+   nouveau chapitre ou enrichir un chapitre existant dans `learning/`.
+   Format : chapitres numérotés (`NN-titre.md`), TOC en tête,
+   auto-portant (lisible à froid), pensé pour export PDF et partage.
+   Voir `learning/README.md` pour la convention.
 
 ## 6. Imports
 
