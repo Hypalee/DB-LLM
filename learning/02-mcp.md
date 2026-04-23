@@ -257,14 +257,60 @@ chaque projet y accède via les imports". **Ça ne marche pas.** La
 config MCP dans un projet spécifique active le MCP uniquement pour
 **ce projet-là**.
 
-### La bonne solution
+### La bonne solution (théorique)
 
 Séparer deux choses :
 
 1. **La config active du MCP** → scope **user** (profil Claude Code).
-   Configurée une fois, suit ton compte, active partout.
+   Configurée une fois via `claude mcp add --scope user …`, suit ton
+   compte, active partout.
 2. **La documentation du MCP** (ce qu'il fait, comment l'utiliser,
    conventions) → dans `claude-config/mcp/<service>.md`.
+
+### La solution pragmatique pour mobile-first
+
+**Problème** : le scope user nécessite la CLI `claude mcp add …`,
+pas disponible depuis l'app mobile / web. Si tu n'as pas de PC avec
+Claude Code CLI, tu ne peux pas configurer au niveau user.
+
+**Contournement** : utiliser le **scope project** via un fichier
+`.mcp.json` committé à la racine de chaque repo. Claude Code le lit
+automatiquement quand tu ouvres le repo, les MCP s'activent (avec
+demande d'auth au premier appel).
+
+Exemple minimal de `.mcp.json` :
+
+```json
+{
+  "mcpServers": {
+    "neon": {
+      "type": "http",
+      "url": "https://mcp.neon.tech/sse"
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com/sse"
+    },
+    "resend": {
+      "command": "npx",
+      "args": ["-y", "resend-mcp"],
+      "env": {
+        "RESEND_API_KEY": "${RESEND_API_KEY}"
+      }
+    }
+  }
+}
+```
+
+Avantages :
+- Pas de CLI requise, tout est dans le repo.
+- Reproductible sur tous devices / toutes sandboxes Claude Code web.
+- Versionné : tu sais quand les MCP ont été ajoutés.
+
+Limite :
+- Chaque repo doit avoir son propre `.mcp.json`. Quand tu crées
+  Brain comme repo séparé, il faudra y mettre un `.mcp.json` aussi.
+  Convention : copier celui de `claude-config` comme base, ajuster.
 
 ### Ce que tu obtiens
 

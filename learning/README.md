@@ -18,6 +18,7 @@ Ce dossier est :
 |---|-------|--------|
 | 01 | [Fondamentaux Claude Code + multi-agent](./01-fondamentaux.md) | Git, CLAUDE.md, skills, hooks, agents, RAG, tokens, env vars |
 | 02 | [MCP : concepts, scopes, cross-repo](./02-mcp.md) | Model Context Protocol, scopes user/project/local, audit Neon/Vercel/Resend, pattern cross-repo |
+| 03 | [Hooks Claude Code en pratique](./03-hooks.md) | Événements, anatomie, flux stdin/stdout, 3 cas pratiques implémentés, debugging, sécurité |
 
 ## Convention d'écriture
 

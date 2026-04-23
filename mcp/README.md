@@ -10,13 +10,17 @@ Voir `learning/02-mcp.md` pour comprendre ce qu'est MCP, les scopes
 
 ## Principe
 
-- Les MCP sont configurés en **scope user** (profil Claude Code
-  global), donc disponibles dans tous les projets.
-- Ce dossier `mcp/` **documente** les MCP configurés : quelles
+- En pratique pour un workflow mobile-first (pas de CLI accessible) :
+  les MCP sont déclarés dans un **`.mcp.json` à la racine du repo**
+  (scope project, committé). Chaque repo embarque sa liste de MCP
+  requis.
+- Ce dossier `mcp/` **documente** les MCP utilisés : quelles
   capacités, quelles conventions, quels pièges.
-- Les commandes de setup sont listées dans chaque fiche — à exécuter
-  une fois, la première fois que tu es sur un environnement où
-  Claude Code CLI est installé.
+- Sur desktop avec CLI, on peut aussi configurer en **scope user**
+  (`claude mcp add --scope user …`), auquel cas le `.mcp.json` du
+  repo devient redondant mais inoffensif.
+
+Pour le détail scope project vs user, voir `learning/02-mcp.md`.
 
 ## Fiches disponibles
 
