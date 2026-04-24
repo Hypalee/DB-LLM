@@ -78,6 +78,27 @@
 
 > Ajouter un projet = créer `projects/<nom>.md` et l'inscrire ici.
 
+## 4.bis MCP configurés (scope user)
+
+Les MCP ci-dessous sont configurés dans mon profil Claude Code et
+disponibles **dans tous mes projets**. La config active vit au niveau
+user, ce dossier `claude-config/mcp/` contient uniquement la
+**documentation** (capacités, conventions, pièges). Voir
+`learning/02-mcp.md` pour le pattern complet.
+
+| MCP | Service | Fiche |
+|-----|---------|-------|
+| Neon | Postgres serverless | `mcp/neon.md` |
+| Vercel | Hébergement Next.js | `mcp/vercel.md` |
+| Resend | Emails transactionnels | `mcp/resend.md` |
+
+Règles universelles quand un MCP est utilisé :
+- Lire la fiche correspondante avant d'exécuter une action non
+  triviale.
+- Respecter les conventions d'usage (jamais de SQL destructif sur
+  branche Neon main, jamais de redeploy Vercel prod sans vérif logs,
+  jamais d'envoi Resend de masse sans confirmation explicite).
+
 ## 5. Règles universelles pour Claude Code
 
 Quand Claude Code travaille sur un de mes projets :
@@ -100,6 +121,13 @@ Quand Claude Code travaille sur un de mes projets :
 8. **Quand un piège est découvert** (bug subtil, comportement non
    documenté), l'ajouter à `memory/gotchas.md` et au `projects/<nom>.md`
    concerné.
+9. **Quand tu m'expliques en détail un concept IA / Claude Code /
+   agents** (définitions, patterns, architectures, tradeoffs), ou
+   quand je te demande explicitement de prendre des notes, écrire un
+   nouveau chapitre ou enrichir un chapitre existant dans `learning/`.
+   Format : chapitres numérotés (`NN-titre.md`), TOC en tête,
+   auto-portant (lisible à froid), pensé pour export PDF et partage.
+   Voir `learning/README.md` pour la convention.
 
 ## 6. Imports
 

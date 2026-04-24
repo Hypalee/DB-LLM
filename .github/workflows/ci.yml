@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-json:
+    name: Validate JSON config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate .mcp.json
+        run: jq . .mcp.json > /dev/null
+      - name: Validate .claude/settings.json
+        run: jq . .claude/settings.json > /dev/null
+
+  shellcheck:
+    name: Shellcheck hooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck on hooks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          shellcheck .claude/hooks/*.sh
