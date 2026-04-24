@@ -4,4 +4,5 @@
 .env.*
 !.env.example
 node_modules/
-.claude/
+# Overrides personnels Claude Code (settings.local.json etc.)
+.claude/settings.local.json

@@ -5,33 +5,53 @@ Claude Code y ait accès lors de chaque session.
 
 Claude Code résout les imports `@file` dans un `CLAUDE.md` **par
 rapport au CWD du projet**. Il faut donc que les fichiers de
-`claude-config` soient accessibles **localement** depuis le repo du
-projet. Trois stratégies possibles, par ordre de préférence.
+`claude-config` soient accessibles depuis le repo du projet. Deux
+stratégies utiles, **à choisir selon ton device principal** :
+
+- **Mobile-first / Claude Code web** : option A (submodule).
+- **Desktop-first / terminal local uniquement** : option B (symlink).
 
 ---
 
-## Option A — Lien symbolique local (recommandée, solo dev)
+## Option A — Git submodule (recommandée pour mobile/web)
 
-Tu clones `claude-config` une fois dans `~/code/claude-config`, et
-chaque projet a un symlink vers lui.
+**Pourquoi c'est le bon choix si tu utilises Claude Code sur
+téléphone** : les sessions web tournent dans une sandbox éphémère. Il
+n'y a pas de filesystem local qui persiste, donc pas de chemin vers
+lequel un symlink pourrait pointer. Le submodule se clone avec le
+projet, les `@imports` fonctionnent partout.
 
-### Setup initial (une fois)
-
-```bash
-mkdir -p ~/code
-cd ~/code
-git clone git@github.com:Hypalee/claude-config.git
-```
-
-### Dans chaque projet
+### Ajouter le submodule à un projet existant
 
 ```bash
 cd ~/code/<projet>   # par exemple
-ln -s ~/code/claude-config claude-config
-echo "claude-config" >> .gitignore
+git submodule add https://github.com/Hypalee/db-llm.git claude-config
+git commit -m "chore: ajoute claude-config en submodule"
+git push
 ```
 
-Puis créer `CLAUDE.md` à la racine du projet :
+### Cloner un projet qui a déjà le submodule
+
+```bash
+git clone --recursive https://github.com/Hypalee/<projet>.git
+# ou si déjà cloné sans --recursive :
+git submodule update --init --recursive
+```
+
+### Mettre à jour claude-config dans un projet
+
+Quand tu modifies `claude-config` (commit + push sur son repo), chaque
+projet qui l'utilise doit "pointer" vers le nouveau commit :
+
+```bash
+cd ~/code/<projet>/claude-config
+git pull origin main
+cd ..
+git commit -am "chore: bump claude-config"
+git push
+```
+
+### CLAUDE.md du projet
 
 ```md
 @claude-config/CLAUDE.md
@@ -44,57 +64,49 @@ les imports ci-dessus)
 ```
 
 ### Avantages
-- Simple, rapide.
-- Une seule source de vérité : quand tu `git pull` dans
-  `~/code/claude-config`, tous tes projets voient la mise à jour.
-- Le symlink n'est pas committé, donc pas de pollution dans les repos
-  projet.
+- Marche sur tous les devices (mobile/web/desktop).
+- Version explicite de `claude-config` liée à chaque projet (le
+  submodule pointe vers un commit précis).
+- Fonctionne en CI sans config spéciale.
 
 ### Limites
-- Marche pour toi, pas pour un CI/collaborateur qui n'aurait pas le
-  repo cloné à côté.
-- Solution : dans ce cas, passer à l'option B.
+- Petite friction : penser à `git submodule update` et committer les
+  bumps quand tu modifies `claude-config`. Avec l'habitude, c'est
+  négligeable.
 
 ---
 
-## Option B — Git submodule
+## Option B — Lien symbolique local (desktop-first uniquement)
 
-Permet à un CI ou un collaborateur d'avoir le contexte en clonant
-juste le repo projet (avec `--recursive`).
+**Ne choisir que si tu n'utilises jamais Claude Code sur le web ou le
+téléphone.** Plus léger mais ne survit pas aux sandboxes éphémères.
+
+### Setup initial (une fois)
+
+```bash
+mkdir -p ~/code
+cd ~/code
+git clone git@github.com:Hypalee/db-llm.git claude-config
+```
+
+### Dans chaque projet
 
 ```bash
 cd ~/code/<projet>
-git submodule add git@github.com:Hypalee/claude-config.git claude-config
-git commit -m "chore: ajoute claude-config en submodule"
-```
-
-Mise à jour :
-```bash
-cd claude-config
-git pull origin main
-cd ..
-git commit -am "chore: update claude-config"
+ln -s ~/code/claude-config claude-config
+echo "claude-config" >> .gitignore
 ```
 
 ### Avantages
-- Version explicite de `claude-config` liée à chaque projet.
-- Fonctionne en CI.
+- Zéro friction : un `git pull` dans `~/code/claude-config` propage
+  instantanément partout.
+- Pas de pollution dans les repos projet (symlink ignoré).
 
 ### Limites
-- Submodules ajoutent de la friction (il faut `--recursive`, il faut
-  penser à `git submodule update`).
-- Pour du solo, c'est souvent overkill.
-
----
-
-## Option C — Copie + script de sync
-
-Copie bête des fichiers, avec un script `bin/sync-claude-config.sh`
-qui pull depuis GitHub et recopie. À éviter : on perd la source
-unique de vérité, on risque des copies divergentes.
-
-À ne considérer que si A et B sont impossibles (ex: contrainte CI
-qui n'accepte ni symlink ni submodule).
+- **Inutilisable en Claude Code web / mobile** : la sandbox éphémère
+  n'a pas ton `~/code/claude-config`.
+- **Inutilisable en CI / pour un collaborateur** qui n'a pas cloné le
+  repo à côté.
 
 ---
 
