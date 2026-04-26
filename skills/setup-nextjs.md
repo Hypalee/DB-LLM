@@ -62,17 +62,22 @@ gh repo create Hypalee/<nom> --private --source=. --push
 ```
 
 ### 7. CLAUDE.md projet
-Créer `CLAUDE.md` à la racine avec :
-```md
-@claude-config/CLAUDE.md
-@claude-config/projects/<nom>.md
 
-## Notes spécifiques à ce projet
-(à remplir au fur et à mesure)
-```
+Créer un `CLAUDE.md` auto-portant à la racine du repo projet :
 
-Puis créer `projects/<nom>.md` dans `claude-config` (cf. template dans
-`claude-config/projects/README.md`).
+- Profil de la stack
+- Conventions code, UI, Git
+- Contexte produit (résumé, repo, env vars, phase actuelle)
+- Pièges spécifiques
+
+Voir un projet existant comme référence (ex : Hypalee/Brain).
+
+> **Note 2026-04-26** — Antérieurement, ce skill prescrivait
+> d'importer un repo `claude-config` partagé via `@claude-config/...`.
+> Ce pattern a été abandonné pour mes projets actuels au profit d'un
+> `CLAUDE.md` auto-portant. Cf. `memory/decisions.md`. Le pattern
+> reste valide si tu démarres un projet en équipe ou si tu as ≥ 2
+> projets avec contexte commun.
 
 ### 8. Deploy initial
 Suivre `skills/deploy-vercel.md`.
@@ -89,5 +94,5 @@ Suivre `skills/deploy-vercel.md`.
 ## Sortie attendue
 - Repo GitHub créé et poussé.
 - Projet déployé sur Vercel.
-- Entrée dans `claude-config/projects/<nom>.md`.
-- Entrée dans le tableau "Projets actifs" du `CLAUDE.md` global.
+- `CLAUDE.md` auto-portant à la racine du projet, sections produit
+  et conventions remplies.

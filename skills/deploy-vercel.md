@@ -49,7 +49,7 @@ Vercel, l'ajouter via dashboard ou `vercel env add`.
 
 - **`NEXT_PUBLIC_APP_URL` ≠ domaine réellement servi** → les cookies
   Better Auth ne matchent pas, l'utilisateur est déloggé en boucle.
-  Bien mettre **exactement** `https://brain-app.app` (pas de slash
+  Bien mettre **exactement** `https://<domaine.tld>` (pas de slash
   final, pas de `www`).
 - **`DATABASE_URL` pooled pour migrations** → les migrations doivent
   utiliser `DIRECT_URL` (non-poolée), sinon erreurs de locks.
