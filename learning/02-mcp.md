@@ -245,6 +245,16 @@ terminal…). Pas besoin d'auth externe.
 
 ## 6. Pattern cross-repo : documenter ici, configurer au user
 
+> **Note 2026-04-26** — Cette section décrit le pattern qui était
+> en place avec `claude-config` importé dans Brain via submodule.
+> Le couplage entre les deux repos a été abandonné le 2026-04-26
+> (cf. `memory/decisions.md` → "Découplage Brain ↔ DB-LLM"). La
+> mécanique générale reste correcte : la **config active des MCP
+> vit au scope user** (profil Claude Code, partagé entre tous mes
+> projets). La **documentation des MCP** vit toujours dans `mcp/`
+> de DB-LLM, à titre de référence personnelle. Section conservée
+> comme référence pour un futur setup multi-repos.
+
 ### Le problème
 
 Tu as un repo partagé `claude-config` qui centralise tes conventions,

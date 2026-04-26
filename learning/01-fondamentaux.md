@@ -142,6 +142,14 @@ Les deux premières lignes importent des fichiers d'un **repo partagé**
 Résultat : une seule source de vérité pour tes conventions, et pour
 chaque projet juste son spécifique.
 
+> **Note 2026-04-26** — L'exemple ci-dessus utilise `claude-config`
+> et `projects/brain.md` parce que c'était le pattern initial pour
+> mes projets. Ce pattern précis a été abandonné pour Brain le
+> 2026-04-26 au profit d'un `CLAUDE.md` projet auto-portant (cf.
+> `memory/decisions.md` → "Découplage Brain ↔ DB-LLM"). Le mécanisme
+> `@import` lui-même reste pertinent et utilisable dès qu'un repo de
+> contexte partagé existe (équipe, ≥ 2 projets avec contexte commun).
+
 ### Règle de densité
 
 Tout ce qui est dans `CLAUDE.md` et ses imports est lu **à chaque
@@ -403,9 +411,11 @@ différence est clé : outil d'apprentissage ≠ filtre permanent.
 Un workflow mature combine les briques précédentes. Exemple d'un dev
 solo sérieux :
 
-1. **Contexte permanent** : `CLAUDE.md` imports depuis un repo
-   partagé (`claude-config`). Claude connaît ta stack, tes
-   conventions, l'état de tes projets à chaque session.
+1. **Contexte permanent** : `CLAUDE.md` à la racine du repo (pour
+   un projet auto-portant) ou imports depuis un repo partagé via
+   submodule (pattern abandonné pour mes projets actuels en
+   2026-04-26 — voir §10). Claude connaît ta stack, tes conventions,
+   l'état de tes projets à chaque session.
 2. **Skills** installés pour les tâches récurrentes : déploiement,
    debug DB, revue de PR, audit env vars. Invoquer via slash command
    ou laisser Claude les choisir.
@@ -527,6 +537,15 @@ plusieurs milliers de fichiers Markdown.
 ---
 
 ## 10. Intégrer un repo de contexte
+
+> **Note 2026-04-26** — Cette section décrit en détail le pattern
+> du repo de contexte partagé (submodule + symlink). **Ce pattern
+> n'est plus en usage dans mes projets actuels** : Brain a été
+> découplé de DB-LLM le 2026-04-26 (cf. `memory/decisions.md` →
+> "Découplage Brain ↔ DB-LLM"), chaque projet de prod a désormais
+> un `CLAUDE.md` auto-portant. Section conservée comme référence
+> pédagogique : si je redémarre un setup multi-repos (équipe, ≥ 2
+> projets avec contexte commun), c'est la mécanique à reprendre.
 
 Pattern utile : un repo `claude-config` (ou `ai-context`, peu importe
 le nom) qui contient les `CLAUDE.md`, skills, memory, playbooks
