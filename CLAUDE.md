@@ -1,9 +1,14 @@
-# CLAUDE.md — Contexte global
+# CLAUDE.md — Profil de dev
 
-> Ce fichier est le "cerveau global" importé dans chaque projet via
-> `@claude-config/CLAUDE.md`. Il décrit le développeur, la stack, les
-> conventions et les projets actifs. Le contexte spécifique à un projet vit
-> dans `projects/<nom>.md`.
+> Ce fichier est mon **profil de dev** : qui je suis, ma stack, mes
+> conventions, ma philosophie de travail. Il sert de contexte pour les
+> sessions Claude Code dans **ce repo** (DB-LLM), qui est un labo
+> d'apprentissage IA personnel — chapitres `learning/`, doc MCP,
+> expérimentations sur Claude Code, hooks, agents.
+>
+> Ce repo n'est **plus importé** dans d'autres projets (cf. décision
+> "2026-04-26 — Découplage" dans `memory/decisions.md`). Chaque projet
+> de prod a son `CLAUDE.md` auto-portant.
 
 ## 1. Profil développeur
 
@@ -13,7 +18,7 @@
   - Frontend : Next.js 16 (App Router), React, Tailwind v4
   - Backend : Routes API Next.js, Server Actions
   - DB : Neon Postgres (serverless)
-  - Auth : Better Auth (email+password, 2FA TOTP, vérif email Resend)
+  - Auth : Better Auth (plugins selon projet)
   - IA : Anthropic SDK (Claude)
   - Hébergement : Vercel
   - DNS : Cloudflare
@@ -70,21 +75,13 @@
 - **Claude est un pair**, pas un générateur. Je veux comprendre ce qui est
   écrit avant de le merger.
 
-## 4. Projets actifs
-
-| Projet | Statut | Description | Fichier |
-|--------|--------|-------------|---------|
-| Brain  | Phase 1 en cours | App de capture de notes enrichies par Claude | `projects/brain.md` |
-
-> Ajouter un projet = créer `projects/<nom>.md` et l'inscrire ici.
-
-## 4.bis MCP configurés (scope user)
+## 4. MCP configurés (scope user)
 
 Les MCP ci-dessous sont configurés dans mon profil Claude Code et
 disponibles **dans tous mes projets**. La config active vit au niveau
-user, ce dossier `claude-config/mcp/` contient uniquement la
-**documentation** (capacités, conventions, pièges). Voir
-`learning/02-mcp.md` pour le pattern complet.
+user, ce dossier `mcp/` contient uniquement la **documentation**
+(capacités, conventions, pièges). Voir `learning/02-mcp.md` pour le
+pattern complet.
 
 | MCP | Service | Fiche |
 |-----|---------|-------|
@@ -101,27 +98,25 @@ Règles universelles quand un MCP est utilisé :
 
 ## 5. Règles universelles pour Claude Code
 
-Quand Claude Code travaille sur un de mes projets :
+Quand Claude Code travaille sur ce repo :
 
-1. **Lire `projects/<nom>.md` avant toute modification non triviale** pour
-   connaître les pièges spécifiques au projet.
-2. **Ne jamais pousser sur `main` directement.** Toujours branche + PR.
-3. **Ne jamais committer de `.env`**, clés API, ou secrets. Si un secret
+1. **Ne jamais pousser sur `main` directement.** Toujours branche + PR.
+2. **Ne jamais committer de `.env`**, clés API, ou secrets. Si un secret
    est détecté dans le diff, arrêter et alerter.
-4. **Avant un changement de schéma DB** (migration, colonne, contrainte),
+3. **Avant un changement de schéma DB** (migration, colonne, contrainte),
    vérifier si d'autres tables/plugins (ex: Better Auth) ont des attentes
    sur ce schéma. Documenter la migration dans `memory/decisions.md`.
-5. **Avant d'ajouter une dépendance**, vérifier qu'elle n'est pas déjà
+4. **Avant d'ajouter une dépendance**, vérifier qu'elle n'est pas déjà
    couverte par l'existant. Justifier l'ajout dans le commit.
-6. **Tests UI** : si un changement touche l'interface, le tester dans un
+5. **Tests UI** : si un changement touche l'interface, le tester dans un
    navigateur avant de déclarer la tâche terminée. Sinon le dire
    explicitement.
-7. **Quand une décision architecturale est prise**, l'ajouter à
+6. **Quand une décision architecturale est prise**, l'ajouter à
    `memory/decisions.md` avec la date et le raisonnement.
-8. **Quand un piège est découvert** (bug subtil, comportement non
-   documenté), l'ajouter à `memory/gotchas.md` et au `projects/<nom>.md`
-   concerné.
-9. **Quand tu m'expliques en détail un concept IA / Claude Code /
+7. **Quand un piège est découvert** (bug subtil, comportement non
+   documenté lié à Claude Code, à un MCP, à un pattern d'agent),
+   l'ajouter à `memory/gotchas.md`.
+8. **Quand tu m'expliques en détail un concept IA / Claude Code /
    agents** (définitions, patterns, architectures, tradeoffs), ou
    quand je te demande explicitement de prendre des notes, écrire un
    nouveau chapitre ou enrichir un chapitre existant dans `learning/`.
@@ -129,17 +124,20 @@ Quand Claude Code travaille sur un de mes projets :
    auto-portant (lisible à froid), pensé pour export PDF et partage.
    Voir `learning/README.md` pour la convention.
 
-## 6. Imports
+## 6. Note historique — pattern submodule abandonné
 
-Ce repo est conçu pour être importé dans chaque projet via un lien
-symbolique ou un submodule. Voir `INTEGRATION.md` pour la procédure.
-
-Dans un projet, le `CLAUDE.md` local commence typiquement par :
-
-```md
-@claude-config/CLAUDE.md
-@claude-config/projects/<nom-projet>.md
-
-## Contexte spécifique à ce projet
-...
-```
+> **2026-04-26** — Ce repo a initialement été conçu pour être importé
+> dans mes projets de prod (Brain) via un submodule git + `@imports`
+> dans le `CLAUDE.md` local. Ce pattern a été abandonné le 2026-04-26
+> au profit d'un découplage strict : chaque projet de prod a son
+> `CLAUDE.md` auto-portant, DB-LLM se recentre sur sa vocation de labo
+> d'apprentissage IA personnel.
+>
+> La documentation du pattern est conservée à titre pédagogique :
+> `INTEGRATION.md`, `WORKFLOW.md`, et les sections concernées des
+> chapitres `learning/` (notamment `01-fondamentaux.md` §10,
+> `02-mcp.md` §6, `04-orchestration-multi-agents.md` §4). Ces
+> documents portent un encadré historique en tête.
+>
+> Décision détaillée : `memory/decisions.md` → "2026-04-26 —
+> Découplage Brain ↔ DB-LLM".
