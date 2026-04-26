@@ -1,5 +1,20 @@
 # WORKFLOW — Maintenir `claude-config` à jour
 
+> **Note 2026-04-26 — Document partiellement historique.** Ce fichier
+> a été écrit quand DB-LLM avait vocation de "cerveau global" importé
+> dans mes projets via submodule. Suite au découplage <projet> ↔ DB-LLM
+> (cf. `memory/decisions.md`), une partie du contenu (rituels
+> post-session liés à `projects/<nom>.md`, fin de phase projet) ne
+> s'applique plus dans ce repo — le suivi d'état des projets vit
+> désormais dans le repo de chaque projet.
+>
+> Les sections **§1 Conventions de commit**, **§4 Automatisation
+> possible**, **§5 Faut-il un vrai RAG** restent applicables à DB-LLM
+> tel que recentré (labo d'apprentissage IA). Les sections **§2** et
+> **§3** sont conservées comme trace du workflow envisagé à
+> l'origine, et restent utilisables si je redémarre un pattern
+> multi-repos.
+
 Ce repo n'a de valeur que s'il reflète la réalité. Ce fichier décrit
 comment l'entretenir sans que ça devienne une corvée.
 
