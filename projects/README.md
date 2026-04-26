@@ -1,13 +1,14 @@
 # projects/
 
-Un fichier par projet actif. Ces fichiers sont importés explicitement
-dans le `CLAUDE.md` local de chaque projet via :
+> **Note 2026-04-26** — Ce dossier servait à héberger une fiche par
+> projet de prod (Brain), importée dans le `CLAUDE.md` du projet via
+> submodule. Ce pattern a été abandonné le 2026-04-26 (cf.
+> `memory/decisions.md` → "Découplage Brain ↔ DB-LLM"). Le dossier
+> est conservé pour héberger ce template, qui reste utile pour
+> rédiger la section "Contexte produit" d'un `CLAUDE.md` projet
+> auto-portant.
 
-```md
-@claude-config/projects/<nom>.md
-```
-
-## Template
+## Template — section "Contexte produit" d'un `CLAUDE.md` projet
 
 ```md
 # <Nom du projet>
@@ -50,7 +51,3 @@ dans le `CLAUDE.md` local de chaque projet via :
 ## Roadmap court terme
 - [ ] ...
 ```
-
-## Projets actifs
-
-- [`brain.md`](./brain.md) — App de capture de notes enrichies par Claude
