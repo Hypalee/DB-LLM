@@ -1,5 +1,19 @@
 # INTEGRATION — Utiliser `claude-config` dans un projet
 
+> **Note 2026-04-26 — Document historique conservé à titre
+> pédagogique.** Ce guide décrit le pattern submodule + symlink qui
+> permettait d'importer DB-LLM dans un projet de prod (Brain) via
+> `@claude-config/...` dans le `CLAUDE.md` local. **Ce pattern n'est
+> plus en usage** : Brain a été découplé de DB-LLM le 2026-04-26 (PR
+> Hypalee/Brain#47), et DB-LLM n'a plus vocation à être importé
+> ailleurs. Décision détaillée : `memory/decisions.md` → "2026-04-26 —
+> Découplage Brain ↔ DB-LLM".
+>
+> Le contenu en dessous reste juste : si un jour je redémarre un
+> pattern multi-repos avec un repo de contexte partagé, c'est la
+> bonne mécanique. Conservé pour ça, et pour la pédagogie (le pattern
+> revient régulièrement dans la littérature Claude Code).
+
 Ce guide décrit comment brancher ce repo dans un projet pour que
 Claude Code y ait accès lors de chaque session.
 
