@@ -81,9 +81,17 @@ pour un workflow 100% desktop (local filesystem persistant). Pour un
 usage mobile / Claude Code web, la sandbox est éphémère, donc le
 symlink n'a rien à pointer.
 
-→ **Submodule git** est la bonne solution. Chaque projet déclare
-`claude-config` comme submodule, la sandbox web clone les deux
-ensemble, les `@imports` fonctionnent.
+→ **Submodule git** est la bonne solution. Chaque projet déclare le
+repo de contexte partagé comme submodule, la sandbox web clone les
+deux ensemble, les `@imports` fonctionnent.
+
+> **Note 2026-04-26** — Cette leçon générale reste vraie : si je
+> redémarre un pattern multi-repos avec un repo de contexte partagé,
+> c'est bien le submodule (pas le symlink) qui marche sur mobile/web.
+> En revanche, **la prescription concrète "claude-config en submodule
+> dans <projet>" a été abandonnée le 2026-04-26** (cf.
+> `memory/decisions.md` → "Découplage <projet> ↔ DB-LLM"). Le pattern
+> reste documenté dans `INTEGRATION.md` à titre pédagogique.
 
 ---
 

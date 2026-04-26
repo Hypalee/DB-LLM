@@ -55,17 +55,23 @@ Procédure complète du "j'ai une idée" à "premier déploiement en ligne".
 3. Vérifier que `NEXT_PUBLIC_APP_URL` = domaine custom exact.
 4. Tester auth + DB sur le domaine de production.
 
-## 6. Intégration dans claude-config
+## 6. Documentation contextuelle du projet
 
-1. Créer `claude-config/projects/<nom>.md` (template dans
-   `projects/README.md`).
-2. Ajouter le projet au tableau "Projets actifs" du `CLAUDE.md` global.
-3. Dans le repo du projet, créer `CLAUDE.md` avec les imports :
-   ```md
-   @claude-config/CLAUDE.md
-   @claude-config/projects/<nom>.md
-   ```
-4. Voir `INTEGRATION.md` pour le lien symbolique.
+> **Note 2026-04-26** — Cette section prescrivait l'intégration en
+> submodule dans `claude-config`. Pattern abandonné le 2026-04-26
+> au profit d'un `CLAUDE.md` auto-portant dans chaque repo de prod
+> (cf. `memory/decisions.md` → "Découplage <projet> ↔ DB-LLM").
+
+1. Créer `CLAUDE.md` à la racine du repo projet, auto-portant :
+   - Profil dev (stack, conventions code, philosophie)
+   - Contexte produit (résumé, repo, env vars, schéma DB, phase
+     actuelle, pièges spécifiques)
+   - Règles pour Claude Code sur ce repo
+   - Voir `projects/README.md` (DB-LLM) pour le template "Contexte
+     produit" qui structure la partie projet.
+2. Créer un dossier `docs/` ou `memory/` dans le projet pour ses
+   propres décisions et gotchas (équivalent local de ce que
+   contient `memory/` dans DB-LLM).
 
 ## 7. Premier commit significatif
 
@@ -90,5 +96,5 @@ Dans `projects/<nom>.md`, remplir dès le jour 1 :
 - [ ] Premier déploiement Vercel vert
 - [ ] Domaine custom fonctionnel (si acheté)
 - [ ] Auth end-to-end validée
-- [ ] `claude-config/projects/<nom>.md` créé
-- [ ] Entrée dans `CLAUDE.md` global ajoutée
+- [ ] `CLAUDE.md` auto-portant créé à la racine du projet
+- [ ] Section "Contexte produit" remplie (template `projects/README.md`)

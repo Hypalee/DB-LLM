@@ -77,8 +77,9 @@ Formuler en disant ce qui ne va pas **et pourquoi**, pas juste "change
   et respecte les conventions, approuver.
 - Ne pas laisser passer "juste cette fois" sur TS strict ou sur un
   workaround — la dette technique se paie toujours.
-- Vérifier le **contexte du projet** (`projects/<nom>.md`) avant de
-  pointer une "erreur" qui est en fait une contrainte connue.
+- Vérifier le **contexte du projet** dans le `CLAUDE.md` du repo
+  concerné, sa documentation interne, avant de pointer une "erreur"
+  qui est en fait une contrainte connue.
 
 ## Sortie attendue
 - Revue structurée par niveau de sévérité, actionnable.

@@ -149,6 +149,8 @@ Quand tu configures un MCP au scope user (dans ton profil Claude Code), il est d
 
 ## 4. Le pattern "documentation comme bus de communication"
 
+> **Note 2026-04-26** — La structure décrite plus bas (§4.1) repose sur le pattern `claude-config` importé dans <projet> via submodule. Ce pattern a été abandonné le 2026-04-26 (cf. `memory/decisions.md` → "Découplage <projet> ↔ DB-LLM") : <projet> est désormais auto-portant avec son propre `CLAUDE.md`, et DB-LLM n'indexe plus les projets externes. **L'idée centrale du chapitre — faire du repo le bus de communication entre agents — reste valide.** Le détail du "où vit quoi" change : les fichiers `decisions.md`, `gotchas.md`, fiche produit vivent désormais **dans le repo de chaque projet**, pas dans un repo de config partagé.
+
 Faute d'orchestration native, la solution qui fonctionne aujourd'hui est de faire **du repo lui-même le bus de communication**. Chaque agent lit et écrit dans des fichiers documentaires conventionnés.
 
 ### 4.1 Structure recommandée pour un setup multi-projets
@@ -234,7 +236,7 @@ Quand un nouveau projet démarre, lire ces fichiers évite de retomber dans les 
 **Méthode** :
 
 1. Demande à Claude.ai de te générer un **prompt structuré** pour Claude Code, avec : contexte, mission claire, contraintes, livrables attendus, mode de validation.
-2. Demande aussi de **mettre à jour `decisions.md`** ou `projects/<projet>.md` si la décision est durable.
+2. Demande aussi de **mettre à jour `decisions.md`** ou la fiche produit du projet (selon où vit ton contexte produit : repo dédié, ou directement dans le `CLAUDE.md` du projet de prod) si la décision est durable.
 3. Tu copies-colles le prompt dans Claude Code.
 4. Tu copies-colles les modifs documentaires dans claude-config.
 
@@ -287,15 +289,19 @@ En pratique, sur un projet déjà avancé, ce flux est moins courant que Design 
 
 **Pourquoi c'est mauvais** : tu te retrouves avec 3 versions désynchronisées du même contexte. Quand tu changes une décision quelque part, tu oublies de la propager ailleurs.
 
-**Solution** : `claude-config/projects/<projet>.md` est la source unique. Les agents y accèdent (directement pour Claude Code via le submodule, par copier-coller pour Claude.ai et Claude Design).
+**Solution** : la fiche produit du projet est la source unique. Les agents y accèdent (directement pour Claude Code via le `CLAUDE.md` du repo, par copier-coller pour Claude.ai et Claude Design).
+
+> **Note 2026-04-26** — La version d'origine pointait `claude-config/projects/<projet>.md` (pattern submodule abandonné le 2026-04-26). Le principe reste le même : **une seule source de vérité** pour le contexte produit, peu importe qu'elle vive dans un repo de config partagé ou dans le `CLAUDE.md` du repo de prod.
 
 ### 6.2 Tout mettre dans le `CLAUDE.md` du projet
 
 **Erreur** : faire un `CLAUDE.md` géant à la racine du projet avec tout le contexte produit + conventions globales + stack + règles + ...
 
-**Pourquoi c'est mauvais** : tu dupliques ce qui devrait être dans `claude-config/CLAUDE.md` (universel) et `claude-config/projects/X.md` (projet).
+**Pourquoi c'est mauvais** : un `CLAUDE.md` géant devient illisible et coûteux en tokens à chaque tour. Conventions universelles, contexte produit, pièges spécifiques mélangés sans structure.
 
-**Solution** : `CLAUDE.md` du projet reste minimaliste avec `@import` des fichiers claude-config. Le contexte vit dans son fichier dédié, importé.
+**Solution** : structurer le `CLAUDE.md` projet avec des sections claires (profil dev, conventions, contexte produit, pièges). Si le fichier dépasse ~300 lignes, c'est probablement le signe qu'il faut découper en plusieurs fichiers internes au repo (ex: `docs/conventions.md` importé via `@`).
+
+> **Note 2026-04-26** — La version d'origine prescrivait de scinder entre un repo partagé (`claude-config/CLAUDE.md`) et un fichier projet (`claude-config/projects/X.md`). Pattern abandonné le 2026-04-26 au profit du `CLAUDE.md` auto-portant (cf. `memory/decisions.md`). La règle de fond — éviter le `CLAUDE.md` géant et bien structurer — reste valide.
 
 ### 6.3 Demander à Claude Code des décisions stratégiques
 
@@ -365,7 +371,7 @@ Anthropic itère vite. Plusieurs choses sont à surveiller dans les mois qui vie
 
 - **L'humain reste le chef d'orchestre**. Aucune solution magique d'orchestration native n'existe aujourd'hui.
 - **Le repo est ton bus de communication**. Faire converger toute la documentation dans des fichiers conventionnés (`CLAUDE.md`, `decisions.md`, `gotchas.md`, `HANDOFF.md`) est ce qui marche le mieux aujourd'hui.
-- **`claude-config` est ta source de vérité partagée** entre tous tes projets. Le `CLAUDE.md` de chaque projet reste minimaliste avec `@import`.
+- **Une source de vérité par projet**. Pour un projet auto-portant, c'est le `CLAUDE.md` à la racine du repo. Pour un setup multi-projets avec contexte commun, un repo de configuration partagé importé via `@` reste une option valide (cf. §4.1, pattern conservé en référence).
 - **Spécialise les agents** : Claude.ai pour la stratégie, Claude Code pour l'exécution, Claude Design pour le visuel. Ne demande pas à un agent de jouer le rôle d'un autre.
 - **Le `HANDOFF.md` est sous-estimé**. C'est le fichier qui assure la continuité temporelle entre sessions Claude Code.
 - **Évite les outils d'orchestration tiers** tant qu'un vrai besoin n'émerge pas. Le coût d'apprentissage et de maintenance n'est pas rentabilisé sur un projet solo en early stage.

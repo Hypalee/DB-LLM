@@ -14,7 +14,7 @@ Claude : tu suis, tu valides, tu ne devines pas.
 ## Playbooks disponibles
 
 - [`new-project.md`](./new-project.md) — Lancer un nouveau projet
-  (repo, stack, domaine, déploiement, intégration dans claude-config)
+  (repo, stack, domaine, déploiement, doc contextuelle)
 - [`db-migration.md`](./db-migration.md) — Faire une migration DB
   en sécurité (branche Neon → test → prod)
 - [`new-service-integration.md`](./new-service-integration.md) —

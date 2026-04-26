@@ -28,7 +28,8 @@ intégrer.
 - Ajouter à `src/lib/env.ts` (parsing zod) pour échouer tôt si
   manquant.
 - Ajouter à Vercel (Preview + Production).
-- Ajouter les noms à `projects/<nom>.md` section "Variables d'env".
+- Ajouter les noms à la section "Variables d'env" du `CLAUDE.md` du
+  projet.
 
 ## 4. Wrapper
 
@@ -58,7 +59,7 @@ intégrer.
 
 ## 7. Documentation
 
-Dans `projects/<nom>.md`, sous "Services tiers" :
+Dans le `CLAUDE.md` du projet, sous "Services tiers" :
 
 ```md
 ### <Service>
@@ -68,7 +69,9 @@ Dans `projects/<nom>.md`, sous "Services tiers" :
 - Pièges : ...
 ```
 
-Et dans `memory/decisions.md` si le choix est structurant.
+Et dans le journal de décisions du projet (ou `memory/decisions.md`
+de DB-LLM si la décision est transversale à plusieurs projets) si le
+choix est structurant.
 
 ## 8. Nettoyage
 
