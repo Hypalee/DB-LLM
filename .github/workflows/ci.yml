@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate .mcp.json
-        run: jq . .mcp.json > /dev/null
       - name: Validate .claude/settings.json
         run: jq . .claude/settings.json > /dev/null
 

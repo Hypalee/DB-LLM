@@ -62,3 +62,26 @@ Journal des décisions structurantes. Format :
 - **Réversibilité** : élevée. Le pattern reste documenté ; si un 2e
   projet apparaît et qu'une duplication réelle pèse, on peut
   ressusciter le submodule.
+
+---
+
+### 2026-04-28 — Suppression du `.mcp.json` racine (reliquat multi-repo)
+- **Contexte** : le `.mcp.json` à la racine de DB-LLM datait du pattern
+  multi-repo abandonné le 2026-04-26 (cf. entrée "Découplage
+  <projet> ↔ DB-LLM" ci-dessus). Il déclarait Neon/Vercel/Resend en
+  scope project alors que `CLAUDE.md` §4 affirme que ces MCP vivent
+  en scope user — désalignement entre le discours du repo et son état
+  réel.
+- **Décision** : supprimer `.mcp.json`, retirer l'étape de validation
+  `jq` associée dans `.github/workflows/ci.yml`, et mettre à jour
+  `mcp/README.md` pour que le "Principe" reflète le scope user comme
+  config active.
+- **Conséquences** :
+  - Le repo est aligné avec `CLAUDE.md` §4.
+  - Les 3 MCP restent configurés au scope user, aucun impact
+    fonctionnel.
+  - Le concept de `.mcp.json` (scope project) reste documenté dans
+    `learning/02-mcp.md` à titre pédagogique — le chapitre n'a pas été
+    touché.
+- **Réversibilité** : triviale. Recréer un `.mcp.json` racine prend 10
+  secondes si DB-LLM redevient un jour un repo consommé par d'autres.
