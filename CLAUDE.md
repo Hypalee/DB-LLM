@@ -101,6 +101,11 @@ Règles universelles quand un MCP est utilisé :
 Quand Claude Code travaille sur ce repo :
 
 1. **Ne jamais pousser sur `main` directement.** Toujours branche + PR.
+   - **Exception, ce repo (DB-LLM) uniquement** : merge direct sur `main`
+     autorisé si je te le demande explicitement. C'est un labo
+     d'apprentissage perso, pas un projet de prod. Cette exception
+     **ne s'étend à aucun autre repo** : elle ne vaut que parce
+     qu'elle est écrite ici, dans le `CLAUDE.md` de DB-LLM.
 2. **Ne jamais committer de `.env`**, clés API, ou secrets. Si un secret
    est détecté dans le diff, arrêter et alerter.
 3. **Avant un changement de schéma DB** (migration, colonne, contrainte),
