@@ -10,17 +10,17 @@ Voir `learning/02-mcp.md` pour comprendre ce qu'est MCP, les scopes
 
 ## Principe
 
-- En pratique pour un workflow mobile-first (pas de CLI accessible) :
-  les MCP sont déclarés dans un **`.mcp.json` à la racine du repo**
-  (scope project, committé). Chaque repo embarque sa liste de MCP
-  requis.
-- Ce dossier `mcp/` **documente** les MCP utilisés : quelles
-  capacités, quelles conventions, quels pièges.
-- Sur desktop avec CLI, on peut aussi configurer en **scope user**
-  (`claude mcp add --scope user …`), auquel cas le `.mcp.json` du
-  repo devient redondant mais inoffensif.
+- Mes MCP (Neon, Vercel, Resend) sont configurés en **scope user**
+  dans mon profil Claude Code (`claude mcp add --scope user …`),
+  donc disponibles automatiquement dans tous mes projets sans
+  config par repo.
+- Ce dossier `mcp/` **documente** ces MCP : capacités, conventions
+  d'usage, pièges. Aucune config active ici.
 
-Pour le détail scope project vs user, voir `learning/02-mcp.md`.
+Le scope project (via `.mcp.json` committé à la racine d'un repo) reste
+une option valide en général — utile pour partager une config en équipe
+ou pour un workflow mobile-first sans CLI. Voir `learning/02-mcp.md`
+pour le détail des trois scopes.
 
 ## Fiches disponibles
 
